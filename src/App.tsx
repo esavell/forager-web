@@ -5,7 +5,7 @@ import Map from './Components/Map';
 const App: React.FC = () => {
 	return (
 		<div className="App">
-			<Map/>
+			<Map />
 		</div>
 	);
 };

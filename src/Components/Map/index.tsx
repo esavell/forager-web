@@ -34,7 +34,10 @@ interface Viewport {
 }
 
 class Map extends React.Component<{}, State> {
-    public state: State = initialState;
+    constructor(props: any) {
+        super(props);
+        this.state = initialState;
+    }
 
     public componentDidMount() {
         window.addEventListener('resize', this.resize);

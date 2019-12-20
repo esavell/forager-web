@@ -16,8 +16,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "format": "eslint src/*.tsx --fix",
-    "format-check": "eslint src/*.tsx",
+    "prettier": "prettier --write src/*.tsx",
+    "eslint": "eslint --fix src/*.tsx",
+    "format": "npm run prettier && npm run eslint",
+    "check": "npm run eslint && npm run build && npm run test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,6 +49,8 @@
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-react": "^7.17.0"
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.17.0",
+    "prettier": "^1.19.1"
   }
 }
