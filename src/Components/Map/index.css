@@ -1,0 +1,10 @@
+.trackButton {
+    right:5px;
+    top:5px;
+    font-size: 20pt;
+    position: absolute;
+}
+
+.mapContainer {
+    position: relative;
+}
