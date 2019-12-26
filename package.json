@@ -19,8 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "prettier": "prettier --write src/*.tsx",
-    "eslint": "eslint --fix src/*.tsx",
+    "prettier": "prettier --write src/**/*.tsx",
+    "eslint": "eslint --fix src/**/*.tsx",
     "format": "npm run prettier && npm run eslint",
     "check": "npm run eslint && npm run build && npm run test",
     "eject": "react-scripts eject"

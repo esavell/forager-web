@@ -6,6 +6,7 @@ import {
 	faCrosshairs,
 	faShoppingBasket,
 } from '@fortawesome/free-solid-svg-icons';
+import TreeMarker from '../TreeMarker';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN || '';
 const initialState: State = {
@@ -17,6 +18,7 @@ const initialState: State = {
 		zoom: 11,
 	},
 	trackUser: false,
+	treeMarkers: [],
 };
 const geoOptions: PositionOptions = {
 	enableHighAccuracy: true,
@@ -26,6 +28,24 @@ interface State {
 	viewport: Viewport;
 	trackUser: boolean;
 	userLocation?: LatLon;
+	treeMarkers: TreeMarkerProps[];
+}
+
+export interface TreeMarkerProps {
+	id: number;
+	location: LatLon;
+	type: TreeType;
+}
+
+export enum TreeType {
+	apple = 'apple',
+	lemon = 'lemon',
+	nuts = 'nut',
+	crabapple = 'crabapple',
+	walnut = 'walnut',
+	mandarin = 'mandarin',
+	blackberry = 'blackberry',
+	plum = 'plum'
 }
 
 interface LatLon {
@@ -45,17 +65,38 @@ const red = '#63161a';
 const green = '#16635b';
 //const brown = "#633a16";
 
-class Map extends React.Component<({}), State> {
+class Map extends React.Component<{}, State> {
 	constructor(props: {}) {
 		super(props);
 		this.state = initialState;
 	}
 
 	public componentDidMount(): void {
+		this.fetchTreeMarkers();
 		window.addEventListener('resize', this.resize);
 		this.resize();
 		this.state.trackUser && this.setUserLocation();
 	}
+
+	private fetchTreeMarkers(): void {
+		fetch('https://api.myjson.com/bins/eu9g0') // Mock data
+			.then((res) => {
+				return res.json();
+			})
+			.then((markers) => {
+				this.setState({
+					treeMarkers: markers,
+				});
+			});
+	}
+
+	loadTreeMarkers: () => void = () => {
+		return this.state.treeMarkers.map((marker) => {
+			return (
+				<TreeMarker key={marker.id} {...marker}/>
+			);
+		});
+	};
 
 	public componentWillUnmount(): void {
 		window.removeEventListener('resize', this.resize);
@@ -89,8 +130,8 @@ class Map extends React.Component<({}), State> {
 					userLocation: userLocation,
 				});
 			},
-			() => { 
-				//TODO: Could not locate error 
+			() => {
+				//TODO: Could not locate error
 			},
 			geoOptions,
 		);
@@ -120,6 +161,7 @@ class Map extends React.Component<({}), State> {
 							/>
 						</Marker>
 					)}
+					{this.loadTreeMarkers()}
 				</MapboxMap>
 				<button
 					className="trackButton"
