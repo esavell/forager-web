@@ -20,17 +20,10 @@ export interface LatLon {
 	longitude: number;
 }
 
-export interface Viewport {
-	height: number | string;
-	width: number | string;
-	zoom: number;
-	latitude: number;
-	longitude: number;
-}
-
 export interface Map {
 	trackUser: boolean;
 	userLocation?: LatLon;
+	treeMarkers: TreeMarker[];
 }
 
 export interface State {

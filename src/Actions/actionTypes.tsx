@@ -6,4 +6,5 @@ export enum ActionType {
 	TOGGLE_MAX_TREE_HEIGHT = 'toggleMaxTreeHeight',
 	TOGGLE_TRACK_USER = 'toggleTrackUser',
 	SET_USER_LOCATION = 'setUserLocation',
+	SET_TREE_MARKERS = 'setTreeMarkers',
 }

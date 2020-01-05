@@ -4,9 +4,9 @@ import MapboxMap, { Marker } from 'react-map-gl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 import TreeMarkerComponent from '../TreeMarker';
-import { Viewport, TreeMarker, LatLon, Map, State } from '../../State';
+import { TreeMarker, LatLon, Map, State } from '../../State';
 import store from '../../store';
-import { setUserLocationAction, toggleTrackUserAction } from '../../Actions';
+import { setUserLocationAction, toggleTrackUserAction, setTreeMarkersAction } from '../../Actions';
 import { connect } from 'react-redux';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN || '';
@@ -18,12 +18,18 @@ const initialState: MapState = {
 		longitude: 172.63467739519413,
 		zoom: 11,
 	},
-	treeMarkers: [],
 };
+
+export interface Viewport {
+	height: number | string;
+	width: number | string;
+	zoom: number;
+	latitude: number;
+	longitude: number;
+}
 
 interface MapState {
 	viewport: Viewport;
-	treeMarkers: TreeMarker[];
 }
 
 const geoOptions: PositionOptions = {
@@ -41,11 +47,11 @@ function mapStateToProps(state: State): Map {
 class MarkerMap extends React.Component<Map, MapState> {
 	constructor(props: Map) {
 		super(props);
+		this.fetchTreeMarkers();
 		this.state = initialState;
 	}
 
 	public componentDidMount(): void {
-		this.fetchTreeMarkers();
 		window.addEventListener('resize', this.resize);
 		this.resize();
 		this.props.trackUser && this.setUserLocation();
@@ -57,14 +63,12 @@ class MarkerMap extends React.Component<Map, MapState> {
 				return res.json();
 			})
 			.then((markers) => {
-				this.setState({
-					treeMarkers: markers,
-				});
+				store.dispatch(setTreeMarkersAction(markers));
 			});
 	}
 
-	loadTreeMarkers: () => void = () => {
-		return this.state.treeMarkers.map((marker) => {
+	createTreeMarkers: () => void = () => {
+		return this.props.treeMarkers.map((marker) => {
 			return <TreeMarkerComponent key={marker.id} {...marker} />;
 		});
 	};
@@ -125,7 +129,7 @@ class MarkerMap extends React.Component<Map, MapState> {
 							<FontAwesomeIcon icon={faShoppingBasket} color={red} />
 						</Marker>
 					)}
-					{this.loadTreeMarkers()}
+					{this.createTreeMarkers()}
 				</MapboxMap>
 				<button className="trackButton" onClick={this.toggleUserLocation} tabIndex={1}>
 					<FontAwesomeIcon
