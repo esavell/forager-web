@@ -4,7 +4,10 @@ import MapboxMap, { Marker } from 'react-map-gl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrosshairs, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 import TreeMarkerComponent from '../TreeMarker';
-import { Viewport, TreeMarker, LatLon } from '../../State';
+import { Viewport, TreeMarker, LatLon, Map, State } from '../../State';
+import store from '../../store';
+import { setUserLocationAction, toggleTrackUserAction } from '../../Actions';
+import { connect } from 'react-redux';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN || '';
 const initialState: MapState = {
@@ -15,14 +18,11 @@ const initialState: MapState = {
 		longitude: 172.63467739519413,
 		zoom: 11,
 	},
-	trackUser: false,
 	treeMarkers: [],
 };
 
 interface MapState {
 	viewport: Viewport;
-	trackUser: boolean;
-	userLocation?: LatLon;
 	treeMarkers: TreeMarker[];
 }
 
@@ -34,8 +34,12 @@ const red = '#63161a';
 const green = '#16635b';
 //const brown = "#633a16";
 
-class Map extends React.Component<{}, MapState> {
-	constructor(props: {}) {
+function mapStateToProps(state: State): Map {
+	return state.map;
+}
+
+class MarkerMap extends React.Component<Map, MapState> {
+	constructor(props: Map) {
 		super(props);
 		this.state = initialState;
 	}
@@ -44,7 +48,7 @@ class Map extends React.Component<{}, MapState> {
 		this.fetchTreeMarkers();
 		window.addEventListener('resize', this.resize);
 		this.resize();
-		this.state.trackUser && this.setUserLocation();
+		this.props.trackUser && this.setUserLocation();
 	}
 
 	private fetchTreeMarkers(): void {
@@ -92,10 +96,7 @@ class Map extends React.Component<{}, MapState> {
 					latitude: position.coords.latitude,
 					longitude: position.coords.longitude,
 				};
-				this.setState({
-					trackUser: true,
-					userLocation: userLocation,
-				});
+				store.dispatch(setUserLocationAction(userLocation));
 			},
 			() => {
 				//TODO: Could not locate error
@@ -105,11 +106,10 @@ class Map extends React.Component<{}, MapState> {
 	};
 
 	private toggleUserLocation: () => void = () => {
-		if (this.state.trackUser) {
-			this.setState({ trackUser: false, userLocation: undefined });
-		} else {
+		if (!this.props.trackUser) {
 			this.setUserLocation();
 		}
+		store.dispatch(toggleTrackUserAction());
 	};
 
 	public render(): JSX.Element {
@@ -120,8 +120,8 @@ class Map extends React.Component<{}, MapState> {
 					{...this.state.viewport}
 					mapboxApiAccessToken={MAPBOX_TOKEN}
 					onViewportChange={this.changeViewport}>
-					{this.state.userLocation && (
-						<Marker {...this.state.userLocation}>
+					{this.props.userLocation && (
+						<Marker {...this.props.userLocation}>
 							<FontAwesomeIcon icon={faShoppingBasket} color={red} />
 						</Marker>
 					)}
@@ -130,7 +130,7 @@ class Map extends React.Component<{}, MapState> {
 				<button className="trackButton" onClick={this.toggleUserLocation} tabIndex={1}>
 					<FontAwesomeIcon
 						icon={faCrosshairs}
-						color={this.state.trackUser ? red : green}
+						color={this.props.trackUser ? red : green}
 					/>
 				</button>
 			</div>
@@ -138,4 +138,4 @@ class Map extends React.Component<{}, MapState> {
 	}
 }
 
-export default Map;
+export default connect(mapStateToProps)(MarkerMap);

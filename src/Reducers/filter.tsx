@@ -26,7 +26,6 @@ export default function filterReducer(
 	},
 	action: Action,
 ): Filter {
-	console.log(state);
 	switch (action.type) {
 	case ActionType.TOGGLE_TREE_TYPE:
 		return toggleTreeType(state, action as ToggleTreeTypeAction);

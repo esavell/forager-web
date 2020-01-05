@@ -10,7 +10,7 @@ export function toggleCurbsideAction(): ToggleCurbsideAction {
 	return { type: ActionType.TOGGLE_CURBSIDE };
 }
 
-export function toggleCurbside(state: Filter, action: ToggleCurbsideAction): Filter {
+export function toggleCurbside(state: Filter, _action: ToggleCurbsideAction): Filter {
 	const filter: Filter = {
 		...state,
 		curbsideOnly: !state.curbsideOnly,

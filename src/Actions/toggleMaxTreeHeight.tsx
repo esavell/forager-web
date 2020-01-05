@@ -10,7 +10,7 @@ export function toggleMaxTreeHeightAction(): ToggleMaxTreeHeightAction {
 	return { type: ActionType.TOGGLE_MAX_TREE_HEIGHT };
 }
 
-export function toggleMaxTreeHeight(state: Filter, action: ToggleMaxTreeHeightAction): Filter {
+export function toggleMaxTreeHeight(state: Filter, _action: ToggleMaxTreeHeightAction): Filter {
 	const filter: Filter = {
 		...state,
 		maxTreeHeightEnabled: !state.maxTreeHeightEnabled,

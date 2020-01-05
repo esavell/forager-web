@@ -4,4 +4,6 @@ export enum ActionType {
 	SET_IN_SEASON_RANGE = 'setInSeasonRange',
 	TOGGLE_CURBSIDE = 'toggleCurbside',
 	TOGGLE_MAX_TREE_HEIGHT = 'toggleMaxTreeHeight',
+	TOGGLE_TRACK_USER = 'toggleTrackUser',
+	SET_USER_LOCATION = 'setUserLocation',
 }

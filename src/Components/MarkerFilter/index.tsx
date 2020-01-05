@@ -48,8 +48,7 @@ class MarkerFilter extends React.Component<Filter, {}> {
 							defaultValue={this.props.maxTreeHeightM}
 							onBlur={(e) => {
 								store.dispatch(setTreeHeightAction(e.target.valueAsNumber));
-							}}>
-						</input>
+							}}></input>
 						m
 					</button>
 				</div>

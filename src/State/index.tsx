@@ -28,9 +28,12 @@ export interface Viewport {
 	longitude: number;
 }
 
-export interface State {
-	filter: Filter;
+export interface Map {
 	trackUser: boolean;
 	userLocation?: LatLon;
-	treeMarkers: TreeMarker[];
+}
+
+export interface State {
+	filter: Filter;
+	map: Map;
 }
