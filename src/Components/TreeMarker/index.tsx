@@ -7,6 +7,7 @@ import { TreeMarker } from '../../State';
 import { TreeType } from '../../spec';
 
 class TreeMarkerComponent extends React.Component<TreeMarker, {}> {
+	//TODO Complete list, icons to accommodate colourblindness
 	private getColour(type: TreeType): string {
 		switch (type) {
 		case TreeType.Apple:
@@ -29,8 +30,8 @@ class TreeMarkerComponent extends React.Component<TreeMarker, {}> {
 		return (
 			<Marker
 				key={this.props.id}
-				latitude={parseFloat(this.props.location.latitude.toString())}
-				longitude={parseFloat(this.props.location.longitude.toString())}>
+				latitude={this.props.location.latitude}
+				longitude={this.props.location.longitude}>
 				<FontAwesomeIcon icon={faSeedling} color={this.getColour(this.props.type)} />
 			</Marker>
 		);

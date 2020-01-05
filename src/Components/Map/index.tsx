@@ -8,6 +8,11 @@ import { TreeMarker, LatLon, Map, State } from '../../State';
 import store from '../../store';
 import { setUserLocationAction, toggleTrackUserAction, setTreeMarkersAction } from '../../Actions';
 import { connect } from 'react-redux';
+import { selectFilteredMarkers } from '../../Selectors/filteredTreeMarkers';
+
+interface MapProps extends Map {
+	treeMarkers: TreeMarker[];
+}
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN || '';
 const initialState: MapState = {
@@ -40,12 +45,12 @@ const red = '#63161a';
 const green = '#16635b';
 //const brown = "#633a16";
 
-function mapStateToProps(state: State): Map {
-	return state.map;
+function mapStateToProps(state: State): MapProps {
+	return Object.assign({ treeMarkers: selectFilteredMarkers(state) }, state.map);
 }
 
-class MarkerMap extends React.Component<Map, MapState> {
-	constructor(props: Map) {
+class MarkerMap extends React.Component<MapProps, MapState> {
+	constructor(props: MapProps) {
 		super(props);
 		this.fetchTreeMarkers();
 		this.state = initialState;
@@ -56,22 +61,6 @@ class MarkerMap extends React.Component<Map, MapState> {
 		this.resize();
 		this.props.trackUser && this.setUserLocation();
 	}
-
-	private fetchTreeMarkers(): void {
-		fetch('https://api.myjson.com/bins/ss8nw') // Mock data
-			.then((res) => {
-				return res.json();
-			})
-			.then((markers) => {
-				store.dispatch(setTreeMarkersAction(markers));
-			});
-	}
-
-	createTreeMarkers: () => void = () => {
-		return this.props.treeMarkers.map((marker) => {
-			return <TreeMarkerComponent key={marker.id} {...marker} />;
-		});
-	};
 
 	public componentWillUnmount(): void {
 		window.removeEventListener('resize', this.resize);
@@ -114,6 +103,22 @@ class MarkerMap extends React.Component<Map, MapState> {
 			this.setUserLocation();
 		}
 		store.dispatch(toggleTrackUserAction());
+	};
+
+	private fetchTreeMarkers(): void {
+		fetch('https://api.myjson.com/bins/ss8nw') // Mock data
+			.then((res) => {
+				return res.json();
+			})
+			.then((markersJson) => {
+				store.dispatch(setTreeMarkersAction(markersJson));
+			});
+	}
+
+	private createTreeMarkers: () => void = () => {
+		return this.props.treeMarkers.map((marker) => {
+			return <TreeMarkerComponent key={marker.id} {...marker} />;
+		});
 	};
 
 	public render(): JSX.Element {

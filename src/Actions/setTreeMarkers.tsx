@@ -1,20 +1,34 @@
 import { Action } from 'redux';
 import { ActionType } from './actionTypes';
-import { Map, TreeMarker } from '../State';
+import { TreeMarker } from '../State';
+import { TreeType, Month } from '../spec';
 
 export interface SetTreeMarkersAction extends Action {
 	type: ActionType.SET_TREE_MARKERS;
-	markers: TreeMarker[];
+	markers: any[];
 }
 
-export function setTreeMarkersAction(markers: TreeMarker[]): SetTreeMarkersAction {
+export function setTreeMarkersAction(markers: any[]): SetTreeMarkersAction {
 	return { type: ActionType.SET_TREE_MARKERS, markers };
 }
 
-export function setTreeMarkers(state: Map, action: SetTreeMarkersAction): Map {
-	const map: Map = {
-		...state,
-		treeMarkers: action.markers,
-	};
-	return map;
+export function setTreeMarkers(state: TreeMarker[], action: SetTreeMarkersAction): TreeMarker[] {
+	//TODO proper checks and handling of bad data
+	return action.markers?.map((marker) => {
+		console.log(marker);
+		marker = marker as any;
+		const convertedMarker: TreeMarker = {
+			id: marker.id,
+			type: marker.type as TreeType,
+			location: {
+				latitude: parseFloat(marker.location.latitude.toString()),
+				longitude: parseFloat(marker.location.longitude.toString()),
+			},
+			seasonStart: Month.Jan, //TODO
+			seasonEnd: Month.Dec, //TODO
+			isCurbside: marker?.isCurbside === 'true',
+			heightM: parseFloat(marker.heightMetres.toString()),
+		};
+		return convertedMarker;
+	});
 }

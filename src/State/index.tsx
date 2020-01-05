@@ -13,6 +13,10 @@ export interface TreeMarker {
 	id: number;
 	location: LatLon;
 	type: TreeType;
+	heightM: number;
+	isCurbside: boolean;
+	seasonStart: Month;
+	seasonEnd: Month;
 }
 
 export interface LatLon {
@@ -23,10 +27,10 @@ export interface LatLon {
 export interface Map {
 	trackUser: boolean;
 	userLocation?: LatLon;
-	treeMarkers: TreeMarker[];
 }
 
 export interface State {
 	filter: Filter;
 	map: Map;
+	markers: TreeMarker[];
 }
