@@ -2,14 +2,12 @@ import React from 'react';
 import './index.css';
 import MapboxMap, { Marker } from 'react-map-gl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faCrosshairs,
-	faShoppingBasket,
-} from '@fortawesome/free-solid-svg-icons';
-import TreeMarker from '../TreeMarker';
+import { faCrosshairs, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
+import TreeMarkerComponent from '../TreeMarker';
+import { Viewport, TreeMarker, LatLon } from '../../State';
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN || '';
-const initialState: State = {
+const initialState: MapState = {
 	viewport: {
 		height: '80',
 		width: '100',
@@ -20,52 +18,23 @@ const initialState: State = {
 	trackUser: false,
 	treeMarkers: [],
 };
-const geoOptions: PositionOptions = {
-	enableHighAccuracy: true,
-};
 
-interface State {
+interface MapState {
 	viewport: Viewport;
 	trackUser: boolean;
 	userLocation?: LatLon;
-	treeMarkers: TreeMarkerProps[];
+	treeMarkers: TreeMarker[];
 }
 
-export interface TreeMarkerProps {
-	id: number;
-	location: LatLon;
-	type: TreeType;
-}
-
-export enum TreeType {
-	apple = 'apple',
-	lemon = 'lemon',
-	nuts = 'nut',
-	crabapple = 'crabapple',
-	walnut = 'walnut',
-	mandarin = 'mandarin',
-	blackberry = 'blackberry',
-	plum = 'plum'
-}
-
-interface LatLon {
-	latitude: number;
-	longitude: number;
-}
-
-interface Viewport {
-	height: number | string;
-	width: number | string;
-	zoom: number;
-	latitude: number;
-	longitude: number;
-}
+const geoOptions: PositionOptions = {
+	enableHighAccuracy: true,
+};
 
 const red = '#63161a';
 const green = '#16635b';
 //const brown = "#633a16";
 
-class Map extends React.Component<{}, State> {
+class Map extends React.Component<{}, MapState> {
 	constructor(props: {}) {
 		super(props);
 		this.state = initialState;
@@ -79,7 +48,7 @@ class Map extends React.Component<{}, State> {
 	}
 
 	private fetchTreeMarkers(): void {
-		fetch('https://api.myjson.com/bins/eu9g0') // Mock data
+		fetch('https://api.myjson.com/bins/ss8nw') // Mock data
 			.then((res) => {
 				return res.json();
 			})
@@ -92,9 +61,7 @@ class Map extends React.Component<{}, State> {
 
 	loadTreeMarkers: () => void = () => {
 		return this.state.treeMarkers.map((marker) => {
-			return (
-				<TreeMarker key={marker.id} {...marker}/>
-			);
+			return <TreeMarkerComponent key={marker.id} {...marker} />;
 		});
 	};
 
@@ -155,18 +122,12 @@ class Map extends React.Component<{}, State> {
 					onViewportChange={this.changeViewport}>
 					{this.state.userLocation && (
 						<Marker {...this.state.userLocation}>
-							<FontAwesomeIcon
-								icon={faShoppingBasket}
-								color={red}
-							/>
+							<FontAwesomeIcon icon={faShoppingBasket} color={red} />
 						</Marker>
 					)}
 					{this.loadTreeMarkers()}
 				</MapboxMap>
-				<button
-					className="trackButton"
-					onClick={this.toggleUserLocation}
-					tabIndex={1}>
+				<button className="trackButton" onClick={this.toggleUserLocation} tabIndex={1}>
 					<FontAwesomeIcon
 						icon={faCrosshairs}
 						color={this.state.trackUser ? red : green}

@@ -3,22 +3,22 @@ import './index.css';
 import { Marker } from 'react-map-gl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSeedling } from '@fortawesome/free-solid-svg-icons';
-import { TreeMarkerProps, TreeType } from '../Map';
+import { TreeMarker } from '../../State';
+import { TreeType } from '../../spec';
 
-class TreeMarker extends React.Component<TreeMarkerProps, {}> {
-
+class TreeMarkerComponent extends React.Component<TreeMarker, {}> {
 	private getColour(type: TreeType): string {
 		switch (type) {
-		case TreeType.apple:
-		case TreeType.crabapple:
+		case TreeType.Apple:
+		case TreeType.Crabapple:
 			return 'green';
-		case TreeType.lemon:
+		case TreeType.Lemon:
 			return 'yellow';
-		case TreeType.walnut:
+		case TreeType.Walnut:
 			return 'brown';
-		case TreeType.mandarin:
+		case TreeType.Mandarin:
 			return 'orange';
-		case TreeType.blackberry:
+		case TreeType.Blackberry:
 			return 'purple';
 		default:
 			return 'black';
@@ -30,16 +30,11 @@ class TreeMarker extends React.Component<TreeMarkerProps, {}> {
 			<Marker
 				key={this.props.id}
 				latitude={parseFloat(this.props.location.latitude.toString())}
-				longitude={parseFloat(
-					this.props.location.longitude.toString(),
-				)}>
-				<FontAwesomeIcon
-					icon={faSeedling}
-					color={this.getColour(this.props.type)}
-				/>
+				longitude={parseFloat(this.props.location.longitude.toString())}>
+				<FontAwesomeIcon icon={faSeedling} color={this.getColour(this.props.type)} />
 			</Marker>
 		);
 	}
 }
 
-export default TreeMarker;
+export default TreeMarkerComponent;
