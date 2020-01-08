@@ -5,6 +5,14 @@
     position: absolute;
 }
 
+.selected {
+    color: #63161a;
+}
+
+.deselected {
+    color: #16635b;
+}
+
 .mapContainer {
     position: relative;
 }

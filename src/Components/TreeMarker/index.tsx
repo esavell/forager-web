@@ -11,7 +11,6 @@ class TreeMarkerComponent extends React.Component<TreeMarker, {}> {
 	private getColour(type: TreeType): string {
 		switch (type) {
 		case TreeType.Apple:
-		case TreeType.Crabapple:
 			return 'green';
 		case TreeType.Lemon:
 			return 'yellow';

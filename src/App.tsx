@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
-import MarkerMap from './Components/Map';
+import MarkerMap from './Components/MarkerMap';
 import MarkerFilter from './Components/MarkerFilter';
 import store from './store';
 import { Provider } from 'react-redux';
-import 'semantic-ui-css/semantic.min.css';
 
 const App: React.FC = () => {
 	return (
