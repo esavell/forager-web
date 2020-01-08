@@ -1,26 +1,26 @@
 import React from 'react';
+
 import { TreeType, TreeTypeDict } from '../../spec';
 
-interface FruitTypeFilterProps {
+interface TreeTypeFilterProps {
 	selectedTypes: TreeType[];
 	allTypes: TreeTypeDict;
-	onChange: (treeType: TreeType) => void;
+	onChange: (treeType: TreeType, value: boolean) => void;
 }
 
-class FruitTypeFilter extends React.Component<FruitTypeFilterProps, {}> {
+class TreeTypeFilter extends React.Component<TreeTypeFilterProps, {}> {
+
 	private createTreeTypeButtons(types: TreeType[]): JSX.Element[] {
 		return types.map((treeType: TreeType) => {
 			return (
-				<button
-					className={
-						this.props.selectedTypes.find((t) => t === treeType)
-							? 'selected'
-							: undefined
-					}
-					key={treeType}
-					onClick={() => this.props.onChange(treeType)}>
-					{treeType}
-				</button>
+				<span key={treeType}>
+					<label htmlFor={treeType}>{treeType.toString()}</label>
+					<input type="checkbox"
+						id={treeType}
+						name="tree_types"
+						checked={this.props.selectedTypes.findIndex(t => t === treeType) >= 0}
+						onChange={(ev) => this.props.onChange(treeType, (ev.target as HTMLInputElement).checked)}/>
+				</span>
 			);
 		});
 	}
@@ -29,7 +29,7 @@ class FruitTypeFilter extends React.Component<FruitTypeFilterProps, {}> {
 		return Object.keys(this.props.allTypes).map((treeTypeCategory: string) => {
 			return (
 				<div key={treeTypeCategory}>
-					<h3>{treeTypeCategory}</h3>
+					<label>{treeTypeCategory.toString()}</label>
 					{this.createTreeTypeButtons(this.props.allTypes[treeTypeCategory])}
 				</div>
 			);
@@ -46,4 +46,4 @@ class FruitTypeFilter extends React.Component<FruitTypeFilterProps, {}> {
 	}
 }
 
-export default FruitTypeFilter;
+export default TreeTypeFilter;

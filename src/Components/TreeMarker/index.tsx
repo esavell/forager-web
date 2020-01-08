@@ -7,7 +7,7 @@ import { TreeMarker } from '../../State';
 import { TreeType } from '../../spec';
 
 class TreeMarkerComponent extends React.Component<TreeMarker, {}> {
-	//TODO Complete list, icons to accommodate colourblindness
+	//TODO Complete list, icons to accommodate colourblindness, set using css instead of props if possible
 	private getColour(type: TreeType): string {
 		switch (type) {
 		case TreeType.Apple:

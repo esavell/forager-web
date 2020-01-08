@@ -7,7 +7,7 @@ import { State, Filter } from '../../State';
 import { TreeTypes, TreeType, MonthRange } from '../../spec';
 import store from '../../store';
 import {
-	toggleTreeTypeAction,
+	setTreeTypeVisibilityAction,
 	toggleCurbsideAction,
 	toggleMaxTreeHeightAction,
 	setTreeHeightAction,
@@ -28,7 +28,7 @@ class MarkerFilter extends React.Component<Filter, {}> {
 					monthEnd={this.props.inSeasonMonthEnd}
 				/>
 				<TreeTypeFilter
-					onChange={(t: TreeType) => store.dispatch(toggleTreeTypeAction(t))}
+					onChange={(t: TreeType, b: boolean) => store.dispatch(setTreeTypeVisibilityAction(t, b))}
 					selectedTypes={this.props.selectedTypes}
 					allTypes={TreeTypes}
 				/>
@@ -37,19 +37,19 @@ class MarkerFilter extends React.Component<Filter, {}> {
 					<button
 						className={this.props.curbsideOnly ? 'selected' : undefined}
 						onClick={() => store.dispatch(toggleCurbsideAction())}>
-						Reachable from Footpath
+							Reachable from Footpath
 					</button>
 					<button
 						className={this.props.maxTreeHeightEnabled ? 'selected' : undefined}
 						onClick={() => store.dispatch(toggleMaxTreeHeightAction())}>
-						Trees no higher than
+							Trees no higher than
 						<input
 							type="number"
 							defaultValue={this.props.maxTreeHeightM}
 							onBlur={(e) => {
 								store.dispatch(setTreeHeightAction(e.target.valueAsNumber));
 							}}></input>
-						m
+							m
 					</button>
 				</div>
 			</div>

@@ -15,7 +15,6 @@ export function setTreeMarkersAction(markers: any[]): SetTreeMarkersAction {
 export function setTreeMarkers(state: TreeMarker[], action: SetTreeMarkersAction): TreeMarker[] {
 	//TODO proper checks and handling of bad data
 	return action.markers?.map((marker) => {
-		marker = marker as any;
 		const convertedMarker: TreeMarker = {
 			id: marker.id,
 			type: marker.type as TreeType,

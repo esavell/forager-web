@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 import {
 	ActionType,
-	ToggleTreeTypeAction,
-	toggleTreeType,
+	SetTreeTypeVisibilityAction,
+	setTreeTypeVisibility,
 	setInSeasonRange,
 	SetInSeasonRangeAction,
 	toggleCurbside,
@@ -28,7 +28,7 @@ export default function filterReducer(
 ): Filter {
 	switch (action.type) {
 	case ActionType.TOGGLE_TREE_TYPE:
-		return toggleTreeType(state, action as ToggleTreeTypeAction);
+		return setTreeTypeVisibility(state, action as SetTreeTypeVisibilityAction);
 	case ActionType.SET_IN_SEASON_RANGE:
 		return setInSeasonRange(state, action as SetInSeasonRangeAction);
 	case ActionType.TOGGLE_CURBSIDE:

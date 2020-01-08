@@ -1,5 +1,5 @@
 export * from './actionTypes';
-export * from './toggleTreeType';
+export * from './setTreeTypeVisibility';
 export * from './setInSeasonRange';
 export * from './toggleCurbside';
 export * from './setTreeHeight';
