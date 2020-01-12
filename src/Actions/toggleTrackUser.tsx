@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ActionType } from './actionTypes';
-import { Map } from '../State';
+import { Map } from '../state';
 
 export interface ToggleTrackUserAction extends Action {
 	type: ActionType.TOGGLE_TRACK_USER;

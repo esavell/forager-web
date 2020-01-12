@@ -11,8 +11,8 @@ import {
 	ToggleMaxTreeHeightAction,
 	setTreeHeight,
 	SetTreeHeightAction,
-} from '../Actions';
-import { Filter } from '../State';
+} from '../actions';
+import { Filter } from '../state';
 import { TreeType, Month } from '../spec';
 
 export default function filterReducer(

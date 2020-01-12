@@ -1,59 +1,22 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import './index.css';
-import TreeTypeFilter from './TreeTypeFilter';
-import InSeasonFilter from './InSeasonFilter';
-import { State, Filter } from '../../State';
-import { TreeTypes, TreeType, MonthRange } from '../../spec';
-import store from '../../store';
-import {
-	setTreeTypeVisibilityAction,
-	toggleCurbsideAction,
-	toggleMaxTreeHeightAction,
-	setTreeHeightAction,
-	setInSeasonRangeAction,
-} from '../../Actions';
+import ForageSeasonFilter from './ForageSeasonFilter';
+import ForageTypeFilter from './ForageTypeFilter';
+import AccessibilityFilter from './AccessibilityFilter';
 
-function mapStateToProps(state: State): Filter {
-	return state.filter;
-}
-
-class MarkerFilter extends React.Component<Filter, {}> {
+class MarkerFilter extends React.Component<{}, {}> {
 	public render(): JSX.Element {
 		return (
 			<div className="filterContainer">
-				<InSeasonFilter
-					onChange={(r: Partial<MonthRange>) => store.dispatch(setInSeasonRangeAction(r))}
-					monthStart={this.props.inSeasonMonthStart}
-					monthEnd={this.props.inSeasonMonthEnd}
-				/>
-				<TreeTypeFilter
-					onChange={(t: TreeType, b: boolean) => store.dispatch(setTreeTypeVisibilityAction(t, b))}
-					selectedTypes={this.props.selectedTypes}
-					allTypes={TreeTypes}
-				/>
-				<div className="filterRow">
-					<h2>Accessibility</h2>
-					<button
-						className={this.props.curbsideOnly ? 'selected' : undefined}
-						onClick={() => store.dispatch(toggleCurbsideAction())}>
-							Reachable from Footpath
-					</button>
-					<button
-						className={this.props.maxTreeHeightEnabled ? 'selected' : undefined}
-						onClick={() => store.dispatch(toggleMaxTreeHeightAction())}>
-							Trees no higher than
-						<input
-							type="number"
-							defaultValue={this.props.maxTreeHeightM}
-							onBlur={(e) => {
-								store.dispatch(setTreeHeightAction(e.target.valueAsNumber));
-							}}></input>
-							m
-					</button>
-				</div>
+				<h1>Filter</h1>
+				<h2>In Season</h2>
+				<ForageSeasonFilter />
+				<h2>Forage Type</h2>
+				<ForageTypeFilter />
+				<h2>Accessibility</h2>
+				<AccessibilityFilter />
 			</div>
 		);
 	}
 }
-export default connect(mapStateToProps)(MarkerFilter);
+
+export default MarkerFilter;

@@ -1,4 +1,4 @@
-import { State, TreeMarker } from '../State';
+import { State, TreeMarker } from '../state';
 import { createSelector } from 'reselect';
 import { Month, TreeType } from '../spec';
 
@@ -28,7 +28,10 @@ export const selectFilteredMarkers = createSelector(
 			if (marker.heightM > treeHeight) {
 				return false;
 			}
-			//TODO Bitwise | of bit array of selected season range and season range of marker
+			//TODO Bitwise & on bit arrays of selected season range and season range of marker
+			// e.g in season Sep - Jan => 100000001111
+			//    search for Nov - Dec => 000000000011
+			// 100000001111 & 000000000011 == true
 			if (!selectedTypes.find((t) => t === marker.type)) {
 				return false;
 			}

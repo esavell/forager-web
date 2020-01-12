@@ -1,1 +1,11 @@
 /* Theme colours: #633a16 #63161a #16635b */
+
+header {
+  display: block;
+  background-color: #16635b;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
+  padding: 0.5em 0em;
+}

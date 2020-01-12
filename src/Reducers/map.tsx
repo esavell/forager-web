@@ -5,8 +5,8 @@ import {
 	ToggleTrackUserAction,
 	setUserLocation,
 	SetUserLocationAction,
-} from '../Actions';
-import { Map } from '../State';
+} from '../actions';
+import { Map } from '../state';
 
 export default function filterReducer(
 	state: Map = {

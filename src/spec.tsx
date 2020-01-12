@@ -1,6 +1,6 @@
 export enum TreeType {
-	Apple = 'apple',
 	Crabapple = 'crabapple',
+	Apple = 'apple',
 	Lemon = 'lemon',
 	Orange = 'orange',
 	Mandarin = 'mandarin',
@@ -23,10 +23,10 @@ export interface MonthRange {
 
 export const TreeTypes: TreeTypeDict = {
 	'Citrus': [TreeType.Lemon, TreeType.Orange, TreeType.Mandarin],
-	'Apple': [TreeType.Apple, TreeType.Crabapple],
-	'Nut': [TreeType.Walnut, TreeType.Chestnut, TreeType.Hazelnut],
-	'Berry': [TreeType.Blackberry, TreeType.Gooseberry],
-	'Stone Fruit': [TreeType.Apricot, TreeType.Plum, TreeType.Cherry],
+	'Apples': [TreeType.Apple, TreeType.Crabapple],
+	'Nuts': [TreeType.Walnut, TreeType.Chestnut, TreeType.Hazelnut],
+	'Berries': [TreeType.Blackberry, TreeType.Gooseberry],
+	'Stone Fruits': [TreeType.Apricot, TreeType.Plum, TreeType.Cherry],
 };
 
 export enum Month {

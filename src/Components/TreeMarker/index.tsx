@@ -3,7 +3,7 @@ import './index.css';
 import { Marker } from 'react-map-gl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSeedling } from '@fortawesome/free-solid-svg-icons';
-import { TreeMarker } from '../../State';
+import { TreeMarker } from '../../state';
 import { TreeType } from '../../spec';
 
 class TreeMarkerComponent extends React.Component<TreeMarker, {}> {

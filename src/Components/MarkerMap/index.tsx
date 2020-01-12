@@ -1,12 +1,12 @@
 import React from 'react';
 import './index.css';
 import Map from './Map';
-import TreeMarkerComponent from '../TreeMarker';
-import { TreeMarker, LatLon, Map as MapState, State } from '../../State';
+import TreeMarkerComponent from '../treeMarker';
+import { TreeMarker, LatLon, Map as MapState, State } from '../../state';
 import store from '../../store';
-import { setUserLocationAction, toggleTrackUserAction, setTreeMarkersAction } from '../../Actions';
+import { setUserLocationAction, toggleTrackUserAction, setTreeMarkersAction } from '../../actions';
 import { connect } from 'react-redux';
-import { selectFilteredMarkers } from '../../Selectors/filteredTreeMarkers';
+import { selectFilteredMarkers } from '../../selectors/filteredTreeMarkers';
 import { faShoppingBasket, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import { Marker } from 'react-map-gl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

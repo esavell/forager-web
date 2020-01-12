@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ActionType } from './actionTypes';
-import { Filter } from '../State';
+import { Filter } from '../state';
 import { MonthRange } from '../spec';
 
 export interface SetInSeasonRangeAction extends Action {

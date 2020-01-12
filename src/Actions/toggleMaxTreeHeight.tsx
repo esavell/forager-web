@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ActionType } from './actionTypes';
-import { Filter } from '../State';
+import { Filter } from '../state';
 
 export interface ToggleMaxTreeHeightAction extends Action {
 	type: ActionType.TOGGLE_MAX_TREE_HEIGHT;

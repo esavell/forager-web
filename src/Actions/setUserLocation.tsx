@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ActionType } from './actionTypes';
-import { Map, LatLon } from '../State';
+import { Map, LatLon } from '../state';
 
 export interface SetUserLocationAction extends Action {
 	type: ActionType.SET_USER_LOCATION;

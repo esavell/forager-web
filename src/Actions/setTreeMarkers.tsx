@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ActionType } from './actionTypes';
-import { TreeMarker } from '../State';
+import { TreeMarker } from '../state';
 import { TreeType, Month } from '../spec';
 
 export interface SetTreeMarkersAction extends Action {
